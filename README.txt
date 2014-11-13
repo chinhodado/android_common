@@ -1,0 +1,1 @@
+Some common Android stuffs, to be used as a library.
