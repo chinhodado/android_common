@@ -1,6 +1,10 @@
 package com.chin.common;
+
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -11,9 +15,13 @@ import android.widget.TextView;
 /**
  * Some utility functions
  * @author Chin
- *
  */
 public class Util {
+    /**
+     * Add a horizontal line separator to a ViewGroup
+     * @param activity
+     * @param view The view to add the line to
+     */
     public static void addLineSeparator(Activity activity, ViewGroup view) {
         View tmpView = new View(activity);
         tmpView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
@@ -122,5 +130,38 @@ public class Util {
             newScaledLink = newScaledLink.replace("/images/", "/images/thumb/");
         }
         return newScaledLink;
+    }
+
+    /**
+     * Add a blank row to a table, for formatting/aesthetic purposes
+     * @param activity
+     * @param table The table to add the blank row to
+     */
+    public static void addBlankRow(Activity activity, TableLayout table) {
+        TableRow trtmp = new TableRow(activity);
+        TextView tvtmp = new TextView(activity);
+        trtmp.addView(tvtmp);
+        table.addView(trtmp);
+    }
+
+    /**
+     * Determines the network connectivity status
+     * @param context
+     * @return true if there is connectivity, false if not
+     */
+    public static boolean hasNetworkConnectivity(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                              activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
+
+    public static void replaceView(View oldView, View newView) {
+        ViewGroup parent = (ViewGroup) oldView.getParent();
+        int index = parent.indexOfChild(oldView);
+        parent.removeView(oldView);
+        parent.addView(newView, index);
     }
 }
