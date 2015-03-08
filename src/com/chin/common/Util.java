@@ -104,6 +104,9 @@ public class Util {
      * @return The link to the new scaled image
      */
     public static String getScaledWikiaImageLink (String link, int newWidth) {
+        // trim off the craps at the end
+        link = link.substring(0, link.indexOf(".png") + 4);
+
         // TODO: maybe we should use regex...
         int lastSlash = link.lastIndexOf("/");
         String scaledName = link.substring(lastSlash + 1); // the original scaled image name
