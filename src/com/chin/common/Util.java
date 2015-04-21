@@ -1,10 +1,18 @@
 package com.chin.common;
 
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -166,5 +174,59 @@ public class Util {
         int index = parent.indexOfChild(oldView);
         parent.removeView(oldView);
         parent.addView(newView, index);
+    }
+
+    @SuppressLint("NewApi")
+    /**
+     * Check for new version
+     * @param activity Current activity
+     * @param latestVersionUrl Github API url to check for latest version
+     * @param pageToGoTo Page to go to if there's a new version
+     * @param displayNoNewVersion Whether to display a dialog if there's no new version
+     */
+    public static void checkNewVersion(final Activity activity, String latestVersionUrl, final String pageToGoTo, boolean displayNoNewVersion) {
+        try {
+            // there's a rate limit of 60 request/hour
+            String jsonString = new NetworkTask().execute(latestVersionUrl).get();
+            JSONObject myJSON = new JSONObject(jsonString);
+
+            String s_latestVer = myJSON.getString("tag_name");
+            String s_currentVer = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
+            Version currentVer = new Version(s_currentVer);
+            Version latestVer = new Version(s_latestVer);
+            if (latestVer.compareTo(currentVer) > 0) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(pageToGoTo));
+                                activity.startActivity(browse);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("New version " + s_latestVer + " is available. Do you want to update?")
+                       .setPositiveButton("Yes", dialogClickListener)
+                       .setNegativeButton("No", dialogClickListener)
+                       .show();
+            }
+            else if (displayNoNewVersion) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage("There's no new version available.")
+                       .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface dialog, int id) {
+                           }
+                       });
+                builder.create().show();
+            }
+        } catch (Exception e) {
+            Log.i("BBDB", "Unable to get new version");
+        }
     }
 }
