@@ -113,7 +113,15 @@ public class Util {
      */
     public static String getScaledWikiaImageLink (String link, int newWidth) {
         // trim off the craps at the end
-        link = link.substring(0, link.indexOf(".png") + 4);
+    	if (link.contains(".png")) {
+    		link = link.substring(0, link.indexOf(".png") + 4);
+    	}
+    	else if (link.contains(".jpg")) {
+    		link = link.substring(0, link.indexOf(".jpg") + 4);
+    	}
+    	else {
+    		return link; // hey, unknown format or something
+    	}
 
         // TODO: maybe we should use regex...
         int lastSlash = link.lastIndexOf("/");
