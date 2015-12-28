@@ -1,5 +1,14 @@
 package com.chin.common;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A modified version of ArrayAdapter that support regex filtering
  */
@@ -30,14 +39,6 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A concrete BaseAdapter that is backed by an array of arbitrary
@@ -60,7 +61,7 @@ public class RegexFilterArrayAdapter<T> extends BaseAdapter implements Filterabl
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    private List<T> mObjects;
+    protected List<T> mObjects;
 
     /**
      * Lock used to modify the content of {@link #mObjects}. Any write operation
@@ -68,41 +69,41 @@ public class RegexFilterArrayAdapter<T> extends BaseAdapter implements Filterabl
      * used by the filter (see {@link #getFilter()} to make a synchronized copy of
      * the original array of data.
      */
-    private final Object mLock = new Object();
+    protected final Object mLock = new Object();
 
     /**
      * The resource indicating what views to inflate to display the content of this
      * array adapter.
      */
-    private int mResource;
+    protected int mResource;
 
     /**
      * The resource indicating what views to inflate to display the content of this
      * array adapter in a drop down widget.
      */
-    private int mDropDownResource;
+    protected int mDropDownResource;
 
     /**
      * If the inflated resource is not a TextView, {@link #mFieldId} is used to find
      * a TextView inside the inflated views hierarchy. This field must contain the
      * identifier that matches the one defined in the resource file.
      */
-    private int mFieldId = 0;
+    protected int mFieldId = 0;
 
     /**
      * Indicates whether or not {@link #notifyDataSetChanged()} must be called whenever
      * {@link #mObjects} is modified.
      */
-    private boolean mNotifyOnChange = true;
+    protected boolean mNotifyOnChange = true;
 
-    private Context mContext;
+    protected Context mContext;
 
     // A copy of the original mObjects array, initialized from and then used instead as soon as
     // the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.
-    private ArrayList<T> mOriginalValues;
-    private ArrayFilter mFilter;
+    protected ArrayList<T> mOriginalValues;
+    protected ArrayFilter mFilter;
 
-    private LayoutInflater mInflater;
+    protected LayoutInflater mInflater;
 
     /**
      * Constructor
