@@ -5,7 +5,7 @@ import org.jsoup.Jsoup;
 import android.os.AsyncTask;
 
 /**
- * An AsyncTask that performs a network request in the backgound
+ * An AsyncTask that performs a network request in the background
  */
 public class NetworkTask extends AsyncTask<String, Void, String> {
 
