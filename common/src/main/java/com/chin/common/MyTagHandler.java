@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/*
  * Modified to handle <script> tag
  * Chin, 2014
  */
@@ -44,12 +44,12 @@ public class MyTagHandler implements Html.TagHandler {
      * Keeps track of lists (ol, ul). On bottom of Stack is the outermost list
      * and on top of Stack is the most nested list
      */
-    Stack<String> lists = new Stack<String>();
+    private Stack<String> lists = new Stack<>();
     /**
      * Tracks indexes of ordered lists so that after a nested list ends
      * we can continue with correct index of outer list
      */
-    Stack<Integer> olNextIndex = new Stack<Integer>();
+    private Stack<Integer> olNextIndex = new Stack<>();
     /**
      * List indentation in pixels. Nested lists use multiple of this.
      */
@@ -68,10 +68,10 @@ public class MyTagHandler implements Html.TagHandler {
         } else if (tag.equalsIgnoreCase("ol")) {
             if (opening) {
                 lists.push(tag);
-                olNextIndex.push(Integer.valueOf(1)).toString();//TODO: add support for lists starting other index than 1
+                olNextIndex.push(1);//TODO: add support for lists starting other index than 1
             } else {
                 lists.pop();
-                olNextIndex.pop().toString();
+                olNextIndex.pop();
             }
         } else if (tag.equalsIgnoreCase("li")) {
             if (opening) {
@@ -81,8 +81,8 @@ public class MyTagHandler implements Html.TagHandler {
                 String parentList = lists.peek();
                 if (parentList.equalsIgnoreCase("ol")) {
                     start(output, new Ol());
-                    output.append(olNextIndex.peek().toString() + ". ");
-                    olNextIndex.push(Integer.valueOf(olNextIndex.pop().intValue() + 1));
+                    output.append(olNextIndex.peek().toString()).append(". ");
+                    olNextIndex.push(olNextIndex.pop() + 1);
                 } else if (parentList.equalsIgnoreCase("ul")) {
                     start(output, new Ul());
                 }
@@ -142,7 +142,6 @@ public class MyTagHandler implements Html.TagHandler {
                 text.setSpan(replace, where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
-        return;
     }
 
     /** @see android.text.Html */
