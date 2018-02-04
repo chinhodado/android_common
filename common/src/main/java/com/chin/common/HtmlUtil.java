@@ -63,8 +63,8 @@ public class HtmlUtil {
     }
 
     public static String getFullImageLink(String shortenedLink) {
-        return "http://vignette" + shortenedLink.charAt(0) + ".wikia.nocookie.net/yugioh/images/" +
-                shortenedLink.charAt(1) + "/" + shortenedLink.charAt(1) + shortenedLink.charAt(2) +
-                "/" + shortenedLink.substring(3);
+        return "http://vignette.wikia.nocookie.net/yugioh/images/" +
+                shortenedLink.charAt(0) + "/" + shortenedLink.charAt(0) + shortenedLink.charAt(1) +
+                "/" + shortenedLink.substring(2);
     }
 }
