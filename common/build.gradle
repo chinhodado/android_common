@@ -19,5 +19,5 @@ android {
 
 dependencies {
     api 'com.android.support:support-v4:28.0.0'
-    api files('libs/jsoup-1.8.3.jar')
+    api group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 }
