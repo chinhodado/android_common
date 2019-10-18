@@ -3,9 +3,9 @@ package com.chin.common;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 
@@ -37,7 +37,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
         // use our own v4 version of FragmentTransaction instead of the one passed in
         FragmentManager fm = mActivity.getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fft = fm.beginTransaction();
+        androidx.fragment.app.FragmentTransaction fft = fm.beginTransaction();
 
         // previous fragment
         mFragment = fm.findFragmentByTag(mTag);
@@ -59,7 +59,7 @@ public class TabListener<T extends Fragment> implements ActionBar.TabListener {
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         // use our own v4 version of FragmentTransaction instead of the one passed in
         FragmentManager fm = mActivity.getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fft = fm.beginTransaction();
+        androidx.fragment.app.FragmentTransaction fft = fm.beginTransaction();
 
         Fragment currentlyShowing = fm.findFragmentByTag(mTag);
 
