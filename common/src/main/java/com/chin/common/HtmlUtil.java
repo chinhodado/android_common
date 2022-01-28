@@ -62,7 +62,7 @@ public class HtmlUtil {
         return newScaledLink;
     }
 
-    public static String getFullImageLink(String shortenedLink) {
+    public static String getFullWikiaImageLink(String shortenedLink) {
         return "https://vignette.wikia.nocookie.net/yugioh/images/" +
                 shortenedLink.charAt(0) + "/" + shortenedLink.charAt(0) + shortenedLink.charAt(1) +
                 "/" + shortenedLink.substring(2);
