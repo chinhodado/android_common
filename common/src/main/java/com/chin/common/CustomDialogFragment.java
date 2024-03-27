@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class CustomDialogFragment extends DialogFragment {
-    private static String MESSAGE = "message";
+    private static final String MESSAGE = "message";
 
     public static CustomDialogFragment newInstance(String message) {
         CustomDialogFragment fragment = new CustomDialogFragment();
