@@ -1,11 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    android {
+        namespace "com.chin.common"
+    }
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
+        compileSdk 34
     }
 
     buildTypes {

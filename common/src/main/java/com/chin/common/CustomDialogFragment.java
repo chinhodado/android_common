@@ -26,12 +26,7 @@ public class CustomDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String message = getArguments().getString(MESSAGE);
         builder.setMessage(message)
-               .setPositiveButton("Quit", new DialogInterface.OnClickListener() {
-                   @Override
-                public void onClick(DialogInterface dialog, int id) {
-                     System.exit(0);
-                   }
-               });
+               .setPositiveButton("Quit", (dialog, id) -> System.exit(0));
         // Create the AlertDialog object and return it
         return builder.create();
     }

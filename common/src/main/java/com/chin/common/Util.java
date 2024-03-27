@@ -157,17 +157,14 @@ public class Util {
             Version currentVer = new Version(s_currentVer);
             Version latestVer = new Version(s_latestVer);
             if (latestVer.compareTo(currentVer) > 0) {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(pageToGoTo));
-                                activity.startActivity(browse);
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                        }
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(pageToGoTo));
+                            activity.startActivity(browse);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
                     }
                 };
 
@@ -180,10 +177,7 @@ public class Util {
             else if (displayNoNewVersion) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setMessage("There's no new version available.")
-                       .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                           @Override
-                           public void onClick(DialogInterface dialog, int id) {
-                           }
+                       .setPositiveButton("Ok", (dialog, id) -> {
                        });
                 builder.create().show();
             }
